@@ -1,3 +1,5 @@
+//change ddp framework
+
 //replace _process_ready in Connection prototype to call intercept.on_ready
 /* replace store 'update' method to add calls to intercept_* by modifying it from within
    the wrappedStore object passed into registerStore in Connection prototype */
