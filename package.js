@@ -8,5 +8,5 @@ Package.describe({
 Package.onUse(function (api) {
     api.use(['ddp', 'underscore'], ['client', 'server']);
 
-    api.addFiles('livedata_connection.js', ['client', 'server']);
+    api.addFiles('ddp-framework.js', ['client', 'server']);
 });
