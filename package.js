@@ -6,5 +6,7 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-    //add files and export
+    api.use(['ddp', 'underscore'], ['client', 'server']);
+
+    api.addFiles('livedata_connection.js', ['client', 'server']);
 });
