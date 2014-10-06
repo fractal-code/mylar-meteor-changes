@@ -27,8 +27,8 @@ connection.__proto__._process_ready = function (msg, updates) {
                 subRecord.readyDeps && subRecord.readyDeps.changed();
             };
 
-            if (Meteor.Collection.intercept && Meteor.Collection.intercept.on_ready) {
-                Meteor.Collection.intercept.on_ready(subRecord.name, ready_func);
+            if (Mongo.Collection.intercept && Mongo.Collection.intercept.on_ready) {
+                Mongo.Collection.intercept.on_ready(subRecord.name, ready_func);
             } else {
                 ready_func();
             }
