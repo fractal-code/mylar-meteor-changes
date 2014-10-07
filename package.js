@@ -8,5 +8,5 @@ Package.describe({
 Package.onUse(function (api) {
     api.use(['ddp', 'underscore', 'mongo', 'minimongo'], ['client', 'server']);
 
-    api.addFiles(['helpers.js', 'ddp-framework.js'], ['client', 'server']);
+    api.addFiles(['helpers.js', 'mongo-ddp-adaptor.js', 'ddp-framework.js'], ['client', 'server']);
 });
