@@ -1,6 +1,6 @@
-//'global' package helpers
+/* 'global' package helpers */
 
-//intercept_* functions
+// intercept_* functions
 intercept_out = function (collection, container, callback) {
     if (Meteor.isClient && Mongo.Collection.intercept && Mongo.Collection.intercept.out) {
         Mongo.Collection.intercept.out(collection, container, callback);
@@ -16,8 +16,9 @@ intercept_in = function (collection, id, container, callback) {
     }
 };
 
-//function which takes in a collection name and returns the matching collection object
-//used by the replaced 'store' update method to access it's correct function context
+// function which takes in a collection name and returns the matching
+// collection object, used by the replaced 'store' update method to
+// access it's correct function context
 getCollection = function (name) {
     var globals = Function('return this')(), key;
 

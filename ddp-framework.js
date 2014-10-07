@@ -1,13 +1,11 @@
-//change ddp framework
+/* change ddp framework */
 
-//replace _process_ready in Connection prototype to call intercept.on_ready
-/* replace store 'update' method to add calls to intercept_* by modifying it from within
-   the wrappedStore object passed into registerStore in Connection prototype */
+// replace _process_ready in Connection prototype to call intercept.on_ready
 
-//hack - create connection to dummy url to access Connection prototype
+// hack - create connection to dummy url to access Connection prototype
 var connection = DDP.connect('dummy_url');
 
-//replace _process_ready in Connection prototype
+// replace _process_ready in Connection prototype
 connection.__proto__._process_ready = function (msg, updates) {
     var self = this;
     // Process "sub ready" messages. "sub ready" messages don't take effect
@@ -22,7 +20,7 @@ connection.__proto__._process_ready = function (msg, updates) {
             // Did we already receive a ready message? (Oops!)
             if (subRecord.ready)
                 return;
-            //call intercept.on_ready(collection, ready_func) instead of ready_func
+            // call intercept.on_ready(collection, ready_func) instead of ready_func
             ready_func = function() {
                 subRecord.readyCallback && subRecord.readyCallback();
                 subRecord.ready = true;
@@ -38,14 +36,17 @@ connection.__proto__._process_ready = function (msg, updates) {
     });
 };
 
-//replace registerStore in Connection prototype
+// replace store 'update' method to add calls to intercept_* by modifying it from within
+// the wrappedStore object passed into registerStore in Connection prototype
+
+// replace registerStore in Connection prototype
 connection.__proto__.registerStore = function (name, wrappedStore) {
     var self = this;
 
     if (name in self._stores)
         return false;
 
-    //replace store 'update' method' to add calls to intercept_*
+    // replace store 'update' method' to add calls to intercept_*
     wrappedStore['update'] = function (msg) {
         var self = getCollection(msg.collection), /* correct function context */
             mongoId = LocalCollection._idParse(msg.id),
@@ -132,5 +133,5 @@ connection.__proto__.registerStore = function (name, wrappedStore) {
     return true;
 };
 
-//disconnect from dummy_url
+// disconnect from dummy_url
 connection.disconnect();
