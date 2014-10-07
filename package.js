@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-    api.use(['ddp', 'underscore'], ['client', 'server']);
+    api.use(['ddp', 'underscore', 'mongo', 'minimongo'], ['client', 'server']);
 
     api.addFiles(['helpers.js', 'ddp-framework.js'], ['client', 'server']);
 });

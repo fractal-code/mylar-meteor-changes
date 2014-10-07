@@ -47,8 +47,9 @@ connection.__proto__.registerStore = function (name, wrappedStore) {
 
     //replace store 'update' method' to add calls to intercept_*
     wrappedStore['update'] = function (msg) {
-        var mongoId = LocalCollection._idParse(msg.id);
-        var doc = self._collection.findOne(mongoId);
+        var self = getCollection(msg.collection), /* correct function context */
+            mongoId = LocalCollection._idParse(msg.id),
+            doc = self._collection.findOne(mongoId);
 
         // Is this a "replace the whole doc" message coming from the quiescence
         // of method writes to an object? (Note that 'undefined' is a valid
