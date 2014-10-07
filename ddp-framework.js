@@ -49,7 +49,7 @@ connection.__proto__.registerStore = function (name, wrappedStore) {
 
     // replace store 'update' method' to add calls to intercept_*
     wrappedStore['update'] = function (msg) {
-        var self = MylarCol[msg.collection], /* correct function context */
+        var self = MylarCol[name], /* correct function context */
             mongoId = LocalCollection._idParse(msg.id),
             doc = self._collection.findOne(mongoId);
 
