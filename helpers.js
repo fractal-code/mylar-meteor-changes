@@ -16,21 +16,5 @@ intercept_in = function (collection, id, container, callback) {
     }
 };
 
-// function which asks for a collection name and returns the matching
-// collection object from within the global object
-getCollection = function (name) {
-    var global = Function('return this')(), key;
-
-    for (key in global) {
-        //check if it is a collection
-        if (global[key] instanceof Mongo.Collection) {
-            //check if it matches the inputted name
-            if (global[key]._name === name) {
-                return (global[key]);
-            }
-        }
-    }
-
-    //if none of the collections match
-    return undefined;
-};
+// dictionary used to access collection objects by name
+MylarCol = {};

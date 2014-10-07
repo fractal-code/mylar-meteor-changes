@@ -43,7 +43,7 @@ connection.__proto__._process_ready = function (msg, updates) {
 // replace registerStore in Connection prototype
 connection.__proto__.registerStore = function (name, wrappedStore) {
     var self = this,
-        collection = getCollection(name);
+        collection = MylarCol[name];
 
     if (name in self._stores)
         return false;
