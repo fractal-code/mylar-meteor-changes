@@ -36,19 +36,24 @@ connection.__proto__._process_ready = function (msg, updates) {
     });
 };
 
-// replace store 'update' method to add calls to intercept_* by modifying it from within
-// the wrappedStore object passed into registerStore in Connection prototype
+// replace registerStore in Connection prototype to call intercept.init on each
+// collection and replace store 'update' method to add calls to intercept_* by modifying
+// it from within the inputted wrappedStore object
 
 // replace registerStore in Connection prototype
 connection.__proto__.registerStore = function (name, wrappedStore) {
-    var self = this;
+    var self = this,
+        collection = getCollection(name);
 
     if (name in self._stores)
         return false;
 
+    //call intercept.init on collection
+    Mongo.Collection.intercept.init(collection);
+
     // replace store 'update' method' to add calls to intercept_*
     wrappedStore['update'] = function (msg) {
-        var self = getCollection(msg.collection), /* correct function context */
+        var self = collection, /* correct function context */
             mongoId = LocalCollection._idParse(msg.id),
             doc = self._collection.findOne(mongoId);
 

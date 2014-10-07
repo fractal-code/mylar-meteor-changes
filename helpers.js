@@ -16,18 +16,17 @@ intercept_in = function (collection, id, container, callback) {
     }
 };
 
-// function which takes in a collection name and returns the matching
-// collection object, used by the replaced 'store' update method to
-// access it's correct function context
+// function which asks for a collection name and returns the matching
+// collection object from within the global object
 getCollection = function (name) {
-    var globals = Function('return this')(), key;
+    var global = Function('return this')(), key;
 
-    for (key in globals) {
+    for (key in global) {
         //check if it is a collection
-        if (globals[key] instanceof Mongo.Collection) {
+        if (global[key] instanceof Mongo.Collection) {
             //check if it matches the inputted name
-            if (globals[key]._name === name) {
-                return (globals[key]);
+            if (global[key]._name === name) {
+                return (global[key]);
             }
         }
     }
