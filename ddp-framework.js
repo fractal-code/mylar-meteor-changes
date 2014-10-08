@@ -12,7 +12,7 @@ if (Meteor.isServer) {
     var Future = Npm.require(path.join('fibers', 'future'));
 }
 // replace apply function in Connection prototype
-connection.__proto__.apply = function (name, args, options, callback, meta) {
+connection.constructor.prototype.apply = function (name, args, options, callback, meta) {
     var self = this;
 
     // We were passed 3 arguments. They may be either (name, args, options)
@@ -252,7 +252,7 @@ connection.__proto__.apply = function (name, args, options, callback, meta) {
 // replace _process_ready in Connection prototype to call intercept.on_ready
 
 // replace _process_ready in Connection prototype
-connection.__proto__._process_ready = function (msg, updates) {
+connection.constructor.prototype._process_ready = function (msg, updates) {
     var self = this;
     // Process "sub ready" messages. "sub ready" messages don't take effect
     // until all current server documents have been flushed to the local
@@ -287,7 +287,7 @@ connection.__proto__._process_ready = function (msg, updates) {
 // it from within the inputted wrappedStore object
 
 // replace registerStore in Connection prototype
-connection.__proto__.registerStore = function (name, wrappedStore) {
+connection.constructor.prototype.registerStore = function (name, wrappedStore) {
     var self = this;
 
     if (name in self._stores)
