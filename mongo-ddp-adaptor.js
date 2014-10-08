@@ -30,20 +30,8 @@ _.each(["insert", "update", "remove"], function (name) {
                     || insertId instanceof Mongo.ObjectID))
                     throw new Error("Meteor requires document _id fields to be non-empty strings or ObjectIDs");
             } else {
-                var generateId = true;
-                // Don't generate the id if we're the client and the 'outermost' call
-                // This optimization saves us passing both the randomSeed and the id
-                // Passing both is redundant.
-                if (self._connection && self._connection !== Meteor.server) {
-                    var enclosing = DDP._CurrentInvocation.get();
-                    if (!enclosing) {
-                        generateId = false;
-                    }
-                }
-                if (generateId) {
-                    insertId = args[0]._id = self._makeNewID();
-                    Mylar_meta['doc'] = args[0];
-                }
+                insertId = args[0]._id = self._makeNewID();
+                Mylar_meta['doc'] = args[0];
             }
         } else {
             args[0] = Mongo.Collection._rewriteSelector(args[0]);
