@@ -1,7 +1,7 @@
 /* change ddp framework */
 
-// hack - create connection to dummy url to access Connection prototype
-var connection = DDP.connect('dummy_url');
+// hack - create connection to access Connection prototype
+var connection = DDP.connect('/');
 
 // replace apply function in Connection prototype to call meta.transform
 
