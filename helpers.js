@@ -145,3 +145,12 @@ _.extend(MethodInvoker.prototype, {
         return !!self._methodResult;
     }
 });
+
+// throwIfSelectorIsNotId function, needed for replaced collection methods
+throwIfSelectorIsNotId = function (selector, methodName) {
+    if (!LocalCollection._selectorIsIdPerhapsAsObject(selector)) {
+        throw new Meteor.Error(
+            403, "Not permitted. Untrusted code may only " + methodName +
+            " documents by ID.");
+    }
+};
