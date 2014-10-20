@@ -6,6 +6,8 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
+    api.versionsFrom('METEOR@0.9.1');
+
     api.use(['ddp', 'random', 'underscore', 'mongo', 'minimongo'], ['client', 'server']);
 
     api.addFiles(['helpers.js', 'mongo-ddp-adaptor.js', 'ddp-framework.js'], ['client', 'server']);
