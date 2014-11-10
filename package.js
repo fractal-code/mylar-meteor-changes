@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Package.onUse(function (api) {
-    api.versionsFrom('METEOR@0.9.1');
+    api.versionsFrom('METEOR@1.0');
 
     api.use(['ddp', 'random', 'underscore', 'mongo', 'minimongo'], ['client', 'server']);
 
