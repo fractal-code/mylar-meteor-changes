@@ -1,3 +1,4 @@
+/* sources unchanged meteor code from core ddp (1.0.7) package */
 /* change ddp framework */
 
 // hack - create empty connection to access Connection prototype

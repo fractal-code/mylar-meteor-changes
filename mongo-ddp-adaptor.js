@@ -1,3 +1,4 @@
+/* sources unchanged meteor code from core mongo (1.0.8) package */
 /* change mongo ddp adaptor */
 
 // replace collection insert, update & remove methods for Mylar_meta
