@@ -12,12 +12,11 @@ if (Meteor.isServer) {
     var Fiber = Npm.require('fibers');
     var Future = Npm.require(path.join('fibers', 'future'));
 }
-// replace apply function in Connection prototype
 connection.constructor.prototype.apply = function (name, args, options, callback, meta) {
     /* unchanged meteor code */
     var self=this;if(!callback&&typeof options==='function'){callback=options;options={}}options=options||{};if(callback){callback=Meteor.bindEnvironment(callback,"delivering result of invoking '"+name+"'")};
 
-    // comment this line to allow args to be mutated
+    // allow args to be mutated by commenting this line
     //args = EJSON.clone(args);
 
     /* unchanged meteor code */
@@ -32,15 +31,14 @@ connection.constructor.prototype.apply = function (name, args, options, callback
 
         return options.returnStubValue ? stubReturnValue : undefined;
     } else {
-        // regular path - unchanged meteor code
+        // regular path
+        /* unchanged meteor code */
         var methodInvoker=new MethodInvoker({methodId:methodId(),callback:callback,connection:self,onResultReceived:options.onResultReceived,wait:!!options.wait,message:message});if(options.wait){self._outstandingMethodBlocks.push({wait:true,methods:[methodInvoker]})}else{if(_.isEmpty(self._outstandingMethodBlocks)||_.last(self._outstandingMethodBlocks).wait)self._outstandingMethodBlocks.push({wait:false,methods:[]});_.last(self._outstandingMethodBlocks).methods.push(methodInvoker)}if(self._outstandingMethodBlocks.length===1)methodInvoker.sendMessage();if(future){return future.wait()}return options.returnStubValue?stubReturnValue:undefined;
     }
 };
 
 
 // replace _process_ready in Connection prototype to call intercept.on_ready
-
-// replace _process_ready in Connection prototype
 connection.constructor.prototype._process_ready = function (msg, updates) {
     var self = this;
     _.each(msg.subs, function (subId) {
@@ -110,5 +108,5 @@ connection.constructor.prototype.registerStore = function (name, wrappedStore) {
     var store={};_.each(['update','beginUpdate','endUpdate','saveOriginals','retrieveOriginals'],function(method){store[method]=function(){return(wrappedStore[method]?wrappedStore[method].apply(wrappedStore,arguments):undefined)}});self._stores[name]=store;var queued=self._updatesForUnknownStores[name];if(queued){store.beginUpdate(queued.length,false);_.each(queued,function(msg){store.update(msg)});store.endUpdate();delete self._updatesForUnknownStores[name]}return true;
 };
 
-// disconnect from dummy_url
+// disconnect empty connection
 connection.disconnect();
