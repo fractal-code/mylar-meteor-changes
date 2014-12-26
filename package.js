@@ -1,6 +1,6 @@
 Package.describe({
     summary: 'Mylar, meteor changes',
-    version: '0.2.2',
+    version: '0.2.3',
     name: 'mylar:meteor-changes',
     git: 'https://github.com/gliesesoftware/mylar-meteor-changes.git'
 });
