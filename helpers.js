@@ -17,9 +17,6 @@ intercept_in = function (collection, id, container, callback) {
     }
 };
 
-// dictionary used to access collection objects by name
-MylarCol = {};
-
 // RandomSeed constructor, needed for makeRpcSeed function
 RandomStream = function (options) {
     /* unchanged meteor code - ddp */

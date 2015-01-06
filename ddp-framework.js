@@ -68,8 +68,8 @@ connection.constructor.prototype.registerStore = function (name, wrappedStore) {
 
     // replace store 'update' method' to add calls to intercept_*
     wrappedStore['update'] = function (msg) {
-        // correct function context by finding collection object in MylarCol dictionary
-        var self = MylarCol[name];
+        // set function context to relevant collection object - finding it by name
+        var self = Mongo.Collection.get(name);
 
         /* unchanged meteor code */
         var mongoId=LocalCollection._idParse(msg.id),doc=self._collection.findOne(mongoId);
